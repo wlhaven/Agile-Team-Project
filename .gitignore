@@ -1,0 +1,9 @@
+# Java files
+*.class
+
+# IntelliJ files
+.idea/
+out/*
+!out/.gitkeep
+
+*.iml
