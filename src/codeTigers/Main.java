@@ -47,7 +47,7 @@ public class Main extends JFrame {
     public static void showLogin() {
         uFrame.setTitle("Login");
         uFrame.getContentPane().removeAll();
-        uFrame.getContentPane().add(new LogginGUI(uData.getEmail(), uData.getPassword()).getRootPanel());
+        uFrame.getContentPane().add(new LogginGUI().getRootPanel());
         uFrame.setResizable(false);
         uFrame.pack();
         uFrame.setLocationRelativeTo(null);

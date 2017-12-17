@@ -94,6 +94,8 @@ public class User {
     private static final Pattern emailPtrn1 = Pattern.compile(
             "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
+    private static final Pattern namePtrn = Pattern.compile(".*\\S");
+
     private static final Pattern pswdPtrn = Pattern.compile(".{6,32}");
     private static final Pattern pswdPtrn1 = Pattern.compile("(?=.*[a-z]).{1,32}");
     private static final Pattern pswdPtrn2 = Pattern.compile("((?=.*[A-Z]).{1,32})");
@@ -125,6 +127,11 @@ public class User {
         // Email matcher
         Matcher emtch = emailPtrn.matcher(email);
         Matcher emtch1 = emailPtrn1.matcher(email);
+
+        // First & Last name matcher
+        Matcher fNamMtch = namePtrn.matcher(fnam);
+        Matcher lNamMtch = namePtrn.matcher(lnam);
+
         // Password matcher
         Matcher pmtch = pswdPtrn.matcher(password);
         Matcher pmtch1 = pswdPtrn1.matcher(password);
@@ -132,7 +139,15 @@ public class User {
         Matcher pmtch3 = pswdPtrn3.matcher(password);
         Matcher pmtch4 = pswdPtrn4.matcher(password);
 
-        if(!(emtch.matches())) {
+        Database database = new Database();
+        User userMatch = database.lookupUser(email);
+
+        if (userMatch != null) {
+            emailTextField.requestFocus();
+            regAlertLabel.setText("User already exists");
+            System.out.println("User already exists");
+        }
+        else if(!(emtch.matches())) {
             emailTextField.requestFocus();
             regAlertLabel.setText("Email Address must contain @ symbol");
             System.out.println("Email Address must contain @ symbol");
@@ -144,12 +159,12 @@ public class User {
             System.out.println("Email Address must only contain @ symbol and a \".\" followed by " +
                     "at least 2 characters, e.g. test@test.com");
         }
-        else if(fnam.equals("")) {
+        else if(fnam.equals("") || !(fNamMtch.matches())) {
             firstNameTextField.requestFocus();
             regAlertLabel.setText("Please provide a first name");
             System.out.println("Please provide a first name");
         }
-        else if(lnam.equals("")) {
+        else if(lnam.equals("") || !(lNamMtch.matches())) {
             lastNameTextField.requestFocus();
             regAlertLabel.setText("Please provide a last name");
             System.out.println("Please provide a last name");
@@ -185,19 +200,10 @@ public class User {
             System.out.println("Passwords doesn't match Confirm Password");
         }
         else {
-            Database database = new Database();
-            User userMatch = database.lookupUser(email);
-
-            if (userMatch != null) {
-                emailTextField.requestFocus();
-                regAlertLabel.setText("User already exists");
-                System.out.println("User already exists");
-            } else {
-                User u = database.regUser(email, name, password, role);
-                System.out.println("User has been created");
-                Main.setUser(u);
-                Main.showChoiceUI();
-            }
+            User u = database.regUser(email, name, password, role);
+            System.out.println("User has been created");
+            Main.setUser(u);
+            Main.showChoiceUI();
         }
     }
 
