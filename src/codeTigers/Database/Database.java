@@ -17,6 +17,8 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.IOException;
 
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
+
 /**
  * Database class shared by the Application.
 =======
@@ -54,6 +56,10 @@ public class Database {
     private static final String LOCAL_USERNAME = "";
     private static final String LOCAL_PASSWORD = "";
 
+    private static final String userName = "root";
+    private static final String password = "Blazer99";
+    private static final String url = "jdbc:mysql://localhost/codetigers?autoReconnect=true&useSSL=false";
+
     private Connection mConnection = null;
 
     /**
@@ -66,7 +72,7 @@ public class Database {
             if (LOCAL_DB) {
                 mConnection = DriverManager.getConnection(LOCAL_CONN_STRING, LOCAL_USERNAME, LOCAL_PASSWORD);
             } else {
-                mConnection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+                mConnection = DriverManager.getConnection(url, userName, password);
             }
             System.out.println("\nConnected to database.");
         } catch (SQLException e) {
@@ -777,9 +783,13 @@ public class Database {
             "SELECT TestID, ItemID, ItemName, ItemImage FROM Test_Data\n" +
                     "WHERE TestID = ?;";
 
-    private static final String CREATE_TEST_SESSION_SQL =
+    //Below query is for use with SQL server
+   /* private static final String CREATE_TEST_SESSION_SQL =
             "INSERT INTO Test_Session(UserID, TestID) VALUES(?,?); "  +
-            " SELECT SCOPE_IDENTITY() AS ID;";
+            " SELECT SCOPE_IDENTITY() AS ID;";*/
+
+    private static final String CREATE_TEST_SESSION_SQL =
+            "INSERT INTO Test_Session(UserID, TestID) VALUES(?,?); " ;
 
     private static final String INSERT_RESULTS_SQL =
             "INSERT INTO Test_Result(Choice, TestSessionID, FirstItemID, SecondItemID)\n" +
@@ -834,6 +844,24 @@ public class Database {
     public int createTestSession(int userID, int m_testID) {
         connect();
         try {
+            PreparedStatement itemQuery = mConnection.prepareStatement(CREATE_TEST_SESSION_SQL, Statement.RETURN_GENERATED_KEYS);
+            itemQuery.setInt(1, userID);
+            itemQuery.setInt(2, m_testID);
+            itemQuery.executeUpdate();
+            ResultSet rs = itemQuery.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            close();
+        }
+        return 0;
+    }
+/*  SQL server version of query
+    public int createTestSession(int userID, int m_testID) {
+        connect();
+        try {
             PreparedStatement itemQuery = mConnection.prepareStatement(CREATE_TEST_SESSION_SQL);
             itemQuery.setInt(1, userID);
             itemQuery.setInt(2, m_testID);
@@ -847,7 +875,7 @@ public class Database {
         }
         return 0;
     }
-
+*/
     /**
      * Insert the test results into the Test Results table on the database.
      *
