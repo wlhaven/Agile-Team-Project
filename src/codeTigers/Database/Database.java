@@ -135,6 +135,30 @@ public class Database {
      */
     public User regUser(String email, String name, String password, String role) {
         connect();
+        int getKey;
+        String inserts = "INSERT INTO UserInfo(eMail, Name, Password, Role) VALUES (?, ?, ?, ?);";
+        try {
+            PreparedStatement statmt = mConnection.prepareStatement(inserts,  Statement.RETURN_GENERATED_KEYS);
+            statmt.setString(1, email);
+            statmt.setString(2, name);
+            statmt.setString(3, password);
+            statmt.setString(4, "User");
+            statmt.executeUpdate();
+            ResultSet rs = statmt.getGeneratedKeys();;
+            if (rs.next()) {
+                getKey = rs.getInt(1);
+                return new User(getKey, email, name, password, role);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //SQL server version
+    /*  public User regUser(String email, String name, String password, String role) {
+        connect();
         String inserts = "INSERT INTO UserInfo(eMail, Name, Password, Role) VALUES (?, ?, ?, ?); SELECT SCOPE_IDENTITY() AS ID;";
         try {
             PreparedStatement statmt = mConnection.prepareStatement(inserts);
@@ -151,7 +175,7 @@ public class Database {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
     /**
      * Return list of tests
@@ -417,20 +441,14 @@ public class Database {
         String query = "INSERT INTO dbo.Test_Data (ItemName, TestID, ItemImage) values (?, ?, ?)";
 
         try {
-
             byte[] imageBytes = null;
-
             // convert image to byte array
             imageBytes = ConvertBufferedImageToByteArray(img);
-
             PreparedStatement stmt = mConnection.prepareStatement(query);
             stmt.setString(1, ItemName);
             stmt.setInt(2, TestID);
             stmt.setBytes (3, imageBytes);
-
             stmt.execute();
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -445,10 +463,8 @@ public class Database {
      */
     public void InsertNewTest(String TestName) {
         connect();
-
         String query = "INSERT INTO dbo.Test (TestName) values (?)";
         try {
-
             PreparedStatement stmt = mConnection.prepareStatement(query);
             stmt.setString(1, TestName);
             stmt.execute();
@@ -466,17 +482,13 @@ public class Database {
      */
     public int lookupTestIDbyName(String testName) {
         connect();
-
         ArrayList<TestData> QuestionsFromDb = new ArrayList<TestData>();
         String query = "SELECT TestID FROM Test WHERE TestName = ?";
         int TestID = 0;
-
         try {
-
             PreparedStatement stmt = mConnection.prepareStatement(query);
             stmt.setString(1,testName);
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 TestID = rs.getInt(1);
             }
@@ -492,11 +504,8 @@ public class Database {
      */
     public boolean HasUserTakenTest(int testID) {
         connect();
-
-        String query = "SELECT TOP 1 TestID FROM Test_Session WHERE TestID = ?";
-        boolean result = false;
+        String query = "SELECT TestID FROM Test_Session WHERE TestID = ?";
         int returnedInt = 0;
-
         try {
             PreparedStatement stmt = mConnection.prepareStatement(query);
             stmt.setInt(1, testID); //param goes here for sprint 2
@@ -522,11 +531,8 @@ public class Database {
      */
     public boolean doesTestAlreadyExist(String testName) { //todo: make this a constraint in the database
         connect();
-
-        String query = "SELECT TOP 1 TestID FROM Test WHERE UPPER(TestName) = UPPER(?)";
-        boolean result = false;
+        String query = "SELECT TestID FROM Test WHERE UPPER(TestName) = UPPER(?)";
         int returnedInt = 0;
-
         try {
             PreparedStatement stmt = mConnection.prepareStatement(query);
             stmt.setString(1, testName); //param goes here for sprint 2
