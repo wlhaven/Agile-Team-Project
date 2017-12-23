@@ -17,8 +17,6 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.io.IOException;
 
-import static java.sql.Statement.RETURN_GENERATED_KEYS;
-
 /**
  * Database class shared by the Application.
 =======
@@ -27,22 +25,10 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
  * This class is shared between each of the different interfaces
  * this file contains methods which they all use and some used only by specific interfaces
  *
- * @author      Jon Grevstad, Wally, Steve, And Cameron
- * @version     11/3/2017
- * Modified     11/3/2017
- * - Added lookupUser which searches for user by distinct email
- * - Added regUser which creates new user
- * - Added SELECT SCOPE giving new users passable ID
- *
- * 11/3/2017
  *
  * @author  Jon Grevstad, Cameron Berg, Steve Daily, Wally Haven
  * @version  11/1/2017
  *
- * -Modifications:  Initial version
- * Author: Steve Daily 12/8/2017
- * add number of tests to title of test summary results
- * changed sort order of dates to show most recent test first in test pulldown menus
  */
 public class Database {
     private static final String SERVER = "cisdbss.pcc.edu";
@@ -50,11 +36,6 @@ public class Database {
     private static final String USERNAME = "234a_CodeTigers";
     private static final String PASSWORD = "me0wme0wme0w";
     private static final String CONN_STRING = "jdbc:jtds:sqlserver://" + SERVER + "/" + DATABASE;
-
-    private static final Boolean LOCAL_DB = false;
-    private static final String LOCAL_CONN_STRING = "jdbc:jtds:sqlserver://./" + DATABASE + ";instance=SQLEXPRESS;namedPipe=true";
-    private static final String LOCAL_USERNAME = "";
-    private static final String LOCAL_PASSWORD = "";
 
     private static final String userName = "root";
     private static final String password = "Blazer99";
@@ -69,11 +50,11 @@ public class Database {
         if (mConnection != null)
             return;
         try {
-            if (LOCAL_DB) {
-                mConnection = DriverManager.getConnection(LOCAL_CONN_STRING, LOCAL_USERNAME, LOCAL_PASSWORD);
-            } else {
-                mConnection = DriverManager.getConnection(url, userName, password);
-            }
+            // MYSQL connection
+            //mConnection = DriverManager.getConnection(url, userName, password);
+
+            //SQL Server connection
+            mConnection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
             System.out.println("\nConnected to database.");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -291,19 +272,15 @@ public class Database {
 
         ArrayList<TestData> QuestionsFromDb = new ArrayList<TestData>();
         String query = "SELECT ItemName, ItemImage FROM Test_Data WHERE TestID = ? ORDER BY ItemName ASC";
-
         try {
-
             PreparedStatement stmt = mConnection.prepareStatement(query);
             stmt.setInt(1, testid);
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 String itemName;
                 byte[] fileBytes = null;
                 BufferedImage itemImage = null;
                 TestData myItem = null;
-
                 itemName = rs.getString(1);
                 fileBytes = rs.getBytes(2);
 
@@ -313,9 +290,7 @@ public class Database {
                     itemImage = ConvertByteArrayToBufferedImage(fileBytes);
                     myItem = new TestData(testid, itemName, itemImage);
                 }
-
                 QuestionsFromDb.add(myItem);
-
             }
             return QuestionsFromDb;
 
@@ -334,26 +309,18 @@ public class Database {
         ArrayList<Test> testsList = new ArrayList<Test>();
 
         String query = "SELECT TestID, TestName FROM Test ORDER BY TestName ASC";
-
         try {
-
             PreparedStatement stmt = mConnection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 String testName;
                 int testID;
-
                 testID = rs.getInt(1);
                 testName = rs.getString(2);
-
                 Test myItem = new Test(testID, testName, false, false);
-
                 testsList.add(myItem);
-
             }
             return testsList;
-
         } catch (SQLException e) {
             System.out.println("lookuptests");
             e.printStackTrace();
@@ -369,12 +336,10 @@ public class Database {
      */
     public BufferedImage ConvertByteArrayToBufferedImage(byte[] input){
         // convert byte array back to BufferedImage
-        try{
-
+        try {
             InputStream in = new ByteArrayInputStream(input);
             BufferedImage output = ImageIO.read(in);
             return output;
-
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("convert byte to buffered");
@@ -391,14 +356,13 @@ public class Database {
      * //todo: this should probably be in some sort of utilities file
      */
     public byte[] ConvertBufferedImageToByteArray(BufferedImage image){
-        try{
-            ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(image, "jpg", baos );
             byte[] imageBytes = baos.toByteArray();
-
             return imageBytes;
 
-        }catch(IOException ie){
+        } catch(IOException ie){
             ie.printStackTrace();
             System.out.println("convert buffered to byte");
             System.out.println(ie.toString());
@@ -437,9 +401,7 @@ public class Database {
      */
     public void InsertTestItemWithImage(String ItemName, int TestID, BufferedImage img) {
         connect();
-
         String query = "INSERT INTO dbo.Test_Data (ItemName, TestID, ItemImage) values (?, ?, ?)";
-
         try {
             byte[] imageBytes = null;
             // convert image to byte array
@@ -560,7 +522,7 @@ public class Database {
     private static final String GET_EMAIL_TEST_NAME_SQL =
             "SELECT U.eMail, TS.TestSessionID  FROM UserInfo AS U " +
                     "   JOIN Test_Session AS TS ON U.UserID = TS.UserID " +
-                    "     JOIN Test AS T ON T.TestID = TS.TestID And T.TestName = ? " +
+                    "   JOIN Test AS T ON T.TestID = TS.TestID And T.TestName = ? " +
                     "WHERE U.Role = 'User'" +
             "ORDER BY U.eMail ASC";
     private static final String GET_EMAIL_USER_ID_SQL =
@@ -573,7 +535,7 @@ public class Database {
              "ORDER BY T.TestName ASC, TS.TestDate DESC";
     private static final String GET_ITEM_NAME_ID_SQL =
             "SELECT TD.ItemID, TD.ItemName FROM Test_Data AS TD " +
-                    "   JOIN Test AS T ON TD.TestID = T.TestID AND T.TestName = ? ";
+                    "  JOIN Test AS T ON TD.TestID = T.TestID AND T.TestName = ? ";
     private static final String GET_TABLE_DATA_SQL =
             "SELECT TR.FirstItemID, TR.SecondItemID, TR.Choice FROM Test_Result AS TR " +
                     "WHERE TR.TestSessionID = ?";
@@ -789,11 +751,6 @@ public class Database {
             "SELECT TestID, ItemID, ItemName, ItemImage FROM Test_Data\n" +
                     "WHERE TestID = ?;";
 
-    //Below query is for use with SQL server
-   /* private static final String CREATE_TEST_SESSION_SQL =
-            "INSERT INTO Test_Session(UserID, TestID) VALUES(?,?); "  +
-            " SELECT SCOPE_IDENTITY() AS ID;";*/
-
     private static final String CREATE_TEST_SESSION_SQL =
             "INSERT INTO Test_Session(UserID, TestID) VALUES(?,?); " ;
 
@@ -845,7 +802,9 @@ public class Database {
      * @param userID  userID of person taking the test
      * @param m_testID  current test id
      * @author Wally Haven
-     * @version 10/27/2017
+     * @version 12/21/2017
+     * Modifications:  Changed query to use Return_Generated_Keys instead of
+     * Select Scope_Identity() to make query compatible with both MYSQL and SQL Server.
      */
     public int createTestSession(int userID, int m_testID) {
         connect();
@@ -864,24 +823,7 @@ public class Database {
         }
         return 0;
     }
-/*  SQL server version of query
-    public int createTestSession(int userID, int m_testID) {
-        connect();
-        try {
-            PreparedStatement itemQuery = mConnection.prepareStatement(CREATE_TEST_SESSION_SQL);
-            itemQuery.setInt(1, userID);
-            itemQuery.setInt(2, m_testID);
-            ResultSet rs = itemQuery.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("ID");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            close();
-        }
-        return 0;
-    }
-*/
+
     /**
      * Insert the test results into the Test Results table on the database.
      *
