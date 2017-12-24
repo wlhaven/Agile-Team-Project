@@ -142,7 +142,10 @@ public class TestChoiceUI {
         });
 
 
-        beginTestButton.addActionListener(e -> Main.showUserTakingTest());
+        beginTestButton.addActionListener(e -> {
+            database.close();
+            Main.showUserTakingTest();
+        });
 
         beginTestButton.addKeyListener(new KeyAdapter() {
             @Override

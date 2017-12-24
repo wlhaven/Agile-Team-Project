@@ -55,7 +55,7 @@ public class Database {
             //mConnection = DriverManager.getConnection(url, userName, password);
 
             //SQL Server connection
-            //mConnection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+           // mConnection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
 
             //SQLite Connection
             mConnection = DriverManager.getConnection(CODETIGERS_DB );
