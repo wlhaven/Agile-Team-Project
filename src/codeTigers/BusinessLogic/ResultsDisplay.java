@@ -1,5 +1,6 @@
 package codeTigers.BusinessLogic;
 import codeTigers.Database.Database;
+import codeTigers.Database.ResultsDB;
 
 import java.util.*;
 
@@ -51,7 +52,7 @@ public class ResultsDisplay {
         int getTestID() { return mTestID; }
     }
 
-    private Database rddb = new Database();
+    private ResultsDB rddb = new ResultsDB();
     private String selectedTestName;
     private LinkedHashMap<String, Integer> emailTestSession;     // Map email address to test session id
     private LinkedHashMap<String, Integer> emailUserID;          // Map email address to user id

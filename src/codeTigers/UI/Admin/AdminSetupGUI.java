@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import codeTigers.BusinessLogic.Test;
 import codeTigers.BusinessLogic.TestData;
+import codeTigers.Database.AdminDB;
 import codeTigers.Database.Database;
 import codeTigers.UI.DroppablePicturePanel;
 
@@ -90,7 +91,7 @@ public class AdminSetupGUI {
     private JButton deleteSelectedItemButton;
     private JButton cancelButton;
 
-    private Database db = new Database();
+    private AdminDB db = new AdminDB();
 
     public JList itemsJList; // this is the Jlist
     private JComboBox comboBox1;
@@ -805,7 +806,7 @@ public class AdminSetupGUI {
             itemsJList.setModel(listModel);
 
         } catch (Exception err) {
-            System.out.println("refresgtestitemlistbox");
+            System.out.println("refresh testitem listbox");
             err.printStackTrace();
         }
     }

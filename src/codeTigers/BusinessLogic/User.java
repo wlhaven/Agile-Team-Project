@@ -1,11 +1,12 @@
 package codeTigers.BusinessLogic;
 
+import codeTigers.Database.Database;
+import codeTigers.Database.LoginDB;
+import codeTigers.Main;
+
 import javax.swing.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import codeTigers.Main;
-import codeTigers.Database.Database;
 
 /**
  * A User Class for login and register
@@ -53,7 +54,7 @@ public class User {
     public static void login(String email, String passwd, JLabel alertLabel,
                              JTextField emailTextField, JPasswordField textPasswordField) {
 
-        Database database = new Database();
+        LoginDB database = new LoginDB();
         User user = database.lookupUser(email);
         database.close();
 
@@ -139,7 +140,7 @@ public class User {
         Matcher pmtch3 = pswdPtrn3.matcher(password);
         Matcher pmtch4 = pswdPtrn4.matcher(password);
 
-        Database database = new Database();
+        LoginDB database = new LoginDB();
         User userMatch = database.lookupUser(email);
 
         if (userMatch != null) {

@@ -1,6 +1,7 @@
 package codeTigers.BusinessLogic;
 
 import codeTigers.Database.Database;
+import codeTigers.Database.TestDB;
 import codeTigers.Main;
 
 import java.util.ArrayList;
@@ -19,14 +20,14 @@ import java.util.Random;
 public class TestDriver {
     private final ArrayList<TestData> testItem;
     private final ArrayList<TestQuestion> createTestList;
-    private final Database db;
+    private final TestDB db;
 
     /**
      * Constructor
      */
     public TestDriver(int testID) {
         createTestList = new ArrayList<>();
-        db = new Database();
+        db = new TestDB();
         testItem = db.readTestItem(testID);
     }
 

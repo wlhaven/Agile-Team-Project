@@ -3,6 +3,7 @@ package codeTigers.UI.Test;
 import codeTigers.BusinessLogic.Test;
 import codeTigers.BusinessLogic.User;
 import codeTigers.Database.Database;
+import codeTigers.Database.LoginDB;
 import codeTigers.Main;
 
 import java.awt.*;
@@ -40,7 +41,7 @@ public class TestChoiceUI {
      * @param u user
      */
     public TestChoiceUI(User u) {
-        Database database = new Database();
+        LoginDB db = new LoginDB();
 
         greetLabel.setText("Hello " + u.getFName());
         String[] colNames = {"Test Name", "Taken"};
@@ -63,12 +64,12 @@ public class TestChoiceUI {
         int sessID;
 
         // Build table & query tests user has taken
-        for (Object[] row : database.getTestRow()) {
+        for (Object[] row : db.getTestRow()) {
             int userID = u.getUserID();
             int testID = (Integer) row[1];
             myDefaultTableModel.addRow(row);
             // check to see if the user has taken the test before
-            sessID = database.getSessionID(userID, testID);
+            sessID = db.getSessionID(userID, testID);
             // Set query result in 2nd column
             if (sessID != 0) {
                 myDefaultTableModel.setValueAt("Yes", rowCount, 1);
@@ -101,13 +102,13 @@ public class TestChoiceUI {
         testComboBox.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
 
         testComboBox.addItem("<html><i>-- Select Test --</i>");
-        for (Object[] rows : database.getTestRow()) {
+        for (Object[] rows : db.getTestRow()) {
             String testNam = (String) rows[0];
             testComboBox.addItem(testNam);
         }
 
         // Map tests for drop down pass
-        HashMap<String, Integer> test = database.populateCombo();
+        HashMap<String, Integer> test = db.populateCombo();
 
         beginTestButton.setEnabled(false);
         testComboBox.addActionListener(e -> {
@@ -143,7 +144,7 @@ public class TestChoiceUI {
 
 
         beginTestButton.addActionListener(e -> {
-            database.close();
+            db.close();
             Main.showUserTakingTest();
         });
 
