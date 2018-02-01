@@ -19,8 +19,8 @@ import java.util.ArrayList;
  * Created by Wally Haven on 1/31/2018.
  */
 public class AdminDB {
-    private Connection mConnection;
-    private Database db;
+    private final Connection mConnection;
+    private final Database db;
 
     public AdminDB() {
         db = new Database();

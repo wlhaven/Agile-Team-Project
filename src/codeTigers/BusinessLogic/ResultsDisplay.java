@@ -1,5 +1,4 @@
 package codeTigers.BusinessLogic;
-import codeTigers.Database.Database;
 import codeTigers.Database.ResultsDB;
 
 import java.util.*;
@@ -53,7 +52,6 @@ public class ResultsDisplay {
     }
 
     private ResultsDB rddb = new ResultsDB();
-    private String selectedTestName;
     private LinkedHashMap<String, Integer> emailTestSession;     // Map email address to test session id
     private LinkedHashMap<String, Integer> emailUserID;          // Map email address to user id
     private HashMap<Integer, String> itemIdName;                 // Map item ID to item mName
@@ -79,7 +77,7 @@ public class ResultsDisplay {
      * @param testName - mName of test selected for result display
      */
     public void setTest(String testName) {
-        selectedTestName = testName;
+        String selectedTestName = testName;
         emailTestSession = rddb.readEmail(testName);
         itemIdName = rddb.readItems(testName);
 
@@ -164,7 +162,7 @@ public class ResultsDisplay {
                 }
                 if (matchPrevious || matchNext) {
                     testName.add(t.getName() + "-" + t.getDate());
-                    if(matchNext == false) {
+                    if(!matchNext) {
                         matchPrevious = false;
                     }
                 } else {

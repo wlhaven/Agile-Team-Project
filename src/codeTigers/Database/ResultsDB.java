@@ -12,8 +12,7 @@ import java.util.LinkedHashMap;
  * Created by Wally Haven on 1/31/2018.
  */
 public class ResultsDB {
-    private Connection mConnection;
-    private Database db;
+    private final Connection mConnection;
 
     private static final String GET_EMAIL_TEST_NAME_SQL =
             "SELECT U.eMail, TS.TestSessionID  FROM UserInfo AS U " +
@@ -48,7 +47,7 @@ public class ResultsDB {
 
     //Constructor
     public ResultsDB() {
-        db = new Database();
+        Database db = new Database();
         mConnection = db.connect();
     }
 
@@ -62,7 +61,7 @@ public class ResultsDB {
     public HashMap<Integer, String> readItems(String testName) {
         HashMap<Integer, String> items = new HashMap<>();
         try (
-                PreparedStatement stmt = mConnection.prepareStatement(GET_ITEM_NAME_ID_SQL);
+                PreparedStatement stmt = mConnection.prepareStatement(GET_ITEM_NAME_ID_SQL)
         ) {
             stmt.setString(1, testName);
             ResultSet rs = stmt.executeQuery();
@@ -86,7 +85,7 @@ public class ResultsDB {
     public LinkedHashMap<String, Integer> readEmail(String testName) {
         LinkedHashMap<String, Integer> email = new LinkedHashMap<>();
         try (
-                PreparedStatement stmt = mConnection.prepareStatement(GET_EMAIL_TEST_NAME_SQL);
+                PreparedStatement stmt = mConnection.prepareStatement(GET_EMAIL_TEST_NAME_SQL)
         ) {
             stmt.setString(1, testName);
             ResultSet rs = stmt.executeQuery();
@@ -109,7 +108,7 @@ public class ResultsDB {
     public LinkedHashMap<String, Integer> readUserInfo() {
         LinkedHashMap<String, Integer> email = new LinkedHashMap<>();
         try (
-                PreparedStatement stmt = mConnection.prepareStatement(GET_EMAIL_USER_ID_SQL);
+                PreparedStatement stmt = mConnection.prepareStatement(GET_EMAIL_USER_ID_SQL)
         ) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -132,7 +131,7 @@ public class ResultsDB {
     public ArrayList<Object[]> readUserTestInfo(Integer userID) {
         ArrayList<Object[]> testInfo = new ArrayList<>();
         try (
-                PreparedStatement stmt = mConnection.prepareStatement(GET_USER_TEST_LIST_SQL);
+                PreparedStatement stmt = mConnection.prepareStatement(GET_USER_TEST_LIST_SQL)
         ) {
             stmt.setInt(1, userID);
             ResultSet rs = stmt.executeQuery();
@@ -161,7 +160,7 @@ public class ResultsDB {
     public ArrayList<Object[]> readSummaryTestInfo() {
         ArrayList<Object[]> testInfo = new ArrayList<>();
         try (
-                PreparedStatement stmt = mConnection.prepareStatement(GET_TEST_INFO_SQL);
+                PreparedStatement stmt = mConnection.prepareStatement(GET_TEST_INFO_SQL)
         ) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -189,7 +188,7 @@ public class ResultsDB {
     public ArrayList<Object[]> readTableData(Integer testSessionId) {
         ArrayList<Object[]> testData = new ArrayList<>();
         try (
-                PreparedStatement stmt = mConnection.prepareStatement(GET_TABLE_DATA_SQL);
+                PreparedStatement stmt = mConnection.prepareStatement(GET_TABLE_DATA_SQL)
         ) {
             stmt.setInt(1, testSessionId);
             ResultSet rs = stmt.executeQuery();
@@ -218,7 +217,7 @@ public class ResultsDB {
     public ArrayList<Object[]> readSummaryTableData(Integer testId) {
         ArrayList<Object[]> testData = new ArrayList<>();
         try (
-                PreparedStatement stmt = mConnection.prepareStatement(GET_SUMMARY_DATA_SQL);
+                PreparedStatement stmt = mConnection.prepareStatement(GET_SUMMARY_DATA_SQL)
         ) {
             stmt.setInt(1, testId);
             ResultSet rs = stmt.executeQuery();

@@ -1,20 +1,7 @@
 package codeTigers.Database;
 
-import java.util.HashMap;
-
-import codeTigers.BusinessLogic.Test;
-import codeTigers.BusinessLogic.TestData;
-
 import java.sql.*;
-import java.io.*;
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.InputStream;
-import java.io.IOException;
 
 /**
  * Database class shared by the Application.

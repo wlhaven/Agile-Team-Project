@@ -1,6 +1,5 @@
 package codeTigers.BusinessLogic;
 
-import codeTigers.Database.Database;
 import codeTigers.Database.TestDB;
 import codeTigers.Main;
 

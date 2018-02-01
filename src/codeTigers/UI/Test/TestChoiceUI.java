@@ -2,7 +2,6 @@ package codeTigers.UI.Test;
 
 import codeTigers.BusinessLogic.Test;
 import codeTigers.BusinessLogic.User;
-import codeTigers.Database.Database;
 import codeTigers.Database.LoginDB;
 import codeTigers.Main;
 

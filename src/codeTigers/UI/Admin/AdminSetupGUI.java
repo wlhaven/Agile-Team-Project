@@ -1,19 +1,16 @@
 package codeTigers.UI.Admin;
 
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.xml.bind.Element;
 import java.awt.event.*;
 import java.util.ArrayList;
 
 import codeTigers.BusinessLogic.Test;
 import codeTigers.BusinessLogic.TestData;
 import codeTigers.Database.AdminDB;
-import codeTigers.Database.Database;
 import codeTigers.UI.DroppablePicturePanel;
 
 /*
@@ -257,7 +254,7 @@ public class AdminSetupGUI {
     public void picturePanelFileLoadCallBack() {
         //BufferedImage image = droppablePicturePanel1.getImage();
 
-        if ((itemsJList.isSelectionEmpty() == false) && (isTestEditable == true)) {
+        if ((!itemsJList.isSelectionEmpty()) && (isTestEditable)) {
             updateItemImage();
             updateCurrentTestLabel();
             setControlsEnabledStatus();
@@ -592,7 +589,7 @@ public class AdminSetupGUI {
                 downloadTestListFromDatabase();
 
                 //set focus on current test
-                comboBox1.setSelectedItem(currentTest.getTestName().toString());
+                comboBox1.setSelectedItem(currentTest.getTestName());
 
                 updateCurrentTestLabel();
                 downloadTestItemList();
@@ -644,7 +641,7 @@ public class AdminSetupGUI {
 
                     //select our new test
                     currentTest = newTest;
-                    comboBox1.setSelectedItem(name.toString());
+                    comboBox1.setSelectedItem(name);
 
                     updateCurrentTestLabel();
                     setControlsEnabledStatus();

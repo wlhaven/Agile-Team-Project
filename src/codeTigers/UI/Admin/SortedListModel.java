@@ -22,7 +22,7 @@ public class SortedListModel extends AbstractListModel {
     SortedSet<String> model;
 
     public SortedListModel() {
-        model = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);;
+        model = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
     }
 
     public int getSize() {

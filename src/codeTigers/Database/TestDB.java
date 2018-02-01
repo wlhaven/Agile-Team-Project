@@ -13,8 +13,8 @@ import java.util.ArrayList;
  * Created by Wally Haven on 1/31/2018.
  */
 public class TestDB {
-    private Connection mConnection;
-    private Database db;
+    private final Connection mConnection;
+    private final Database db;
 
     private static final String GET_ITEMS_SQL =
             "SELECT TestID, ItemID, ItemName, ItemImage FROM Test_Data\n" +
@@ -45,7 +45,7 @@ public class TestDB {
      * Modification:  Added image to query results.
      */
     public ArrayList<TestData> readTestItem(int m_testID) {
-        ArrayList itemList = new ArrayList<TestData>();
+        ArrayList<TestData> itemList = new ArrayList<TestData>();
         try {
             PreparedStatement itemQuery = mConnection.prepareStatement(GET_ITEMS_SQL);
             itemQuery.setInt(1, m_testID);

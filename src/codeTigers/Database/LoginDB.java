@@ -3,10 +3,6 @@ package codeTigers.Database;
 import codeTigers.BusinessLogic.Test;
 import codeTigers.BusinessLogic.User;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.sql.*;
@@ -15,8 +11,8 @@ import java.sql.*;
  * Created by Wally Haven on 1/31/2018.
  */
 public class LoginDB {
-    private Connection mConnection;
-    private Database db;
+    private final Connection mConnection;
+    private final Database db;
 
     public LoginDB() {
         db = new Database();
@@ -73,7 +69,6 @@ public class LoginDB {
             statmt.setString(4, "User");
             statmt.executeUpdate();
             ResultSet rs = statmt.getGeneratedKeys();
-            ;
             if (rs.next()) {
                 getKey = rs.getInt(1);
                 return new User(getKey, email, name, password, role);
