@@ -19,8 +19,6 @@ import java.io.IOException;
  *
  */
 public class Database {
-/*    private static final String CODETIGERS_DB = "jdbc:sqlite:CodeTigers.db";*/
-
     private  String userName;
     private  String password;
     private  String url;
@@ -52,11 +50,7 @@ public class Database {
         if (mConnection != null)
             return mConnection;
         try {
-
             mConnection = DriverManager.getConnection(url, userName, password);
-            //SQLite Connection
-            // mConnection = DriverManager.getConnection(CODETIGERS_DB );
-
             System.out.println("\nConnected to database.");
         } catch (SQLException e) {
             e.printStackTrace();
