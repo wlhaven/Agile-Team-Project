@@ -1,6 +1,8 @@
 package codeTigers.Database;
 
 import java.sql.*;
+import java.util.Properties;
+import java.io.IOException;
 
 
 /**
@@ -17,18 +19,31 @@ import java.sql.*;
  *
  */
 public class Database {
-    private static final String SERVER = "cisdbss.pcc.edu";
-    private static final String DATABASE = "234a_CodeTigers";
-    private static final String USERNAME = "234a_CodeTigers";
-    private static final String PASSWORD = "me0wme0wme0w";
-    private static final String CONN_STRING = "jdbc:jtds:sqlserver://" + SERVER + "/" + DATABASE;
+/*    private static final String CODETIGERS_DB = "jdbc:sqlite:CodeTigers.db";*/
 
-    private static final String userName = "root";
-    private static final String password = "Blazer99";
-    private static final String url = "jdbc:mysql://localhost/codetigers?autoReconnect=true&useSSL=false";
-
-    private static final String CODETIGERS_DB = "jdbc:sqlite:CodeTigers.db";
+    private  String userName;
+    private  String password;
+    private  String url;
     private Connection mConnection = null;
+    private final Properties prop = new Properties();
+
+    public Database() {
+        getConnectionInfo();
+    }
+
+    private void getConnectionInfo() {
+        try {
+          //String filename = "mysqlConfig.properties";
+            String filename = "SQLServerConfig.properties";
+            prop.load(getClass().getClassLoader().getResourceAsStream(filename));
+            url = prop.getProperty("database");
+            userName = prop.getProperty("dbuser");
+            password = prop.getProperty("dbpassword");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     /**
      * This connects to database
@@ -37,14 +52,10 @@ public class Database {
         if (mConnection != null)
             return mConnection;
         try {
-            // MYSQL connection
+
             mConnection = DriverManager.getConnection(url, userName, password);
-
-            //SQL Server connection
-           // mConnection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-
             //SQLite Connection
-           // mConnection = DriverManager.getConnection(CODETIGERS_DB );
+            // mConnection = DriverManager.getConnection(CODETIGERS_DB );
 
             System.out.println("\nConnected to database.");
         } catch (SQLException e) {

@@ -126,11 +126,6 @@ public class TestDB {
 
     public void close() {
         db.close();
-       /* try {
-            mConnection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
     }
 }
 
