@@ -2,7 +2,7 @@ package codeTigers.UI.Test;
 
 import codeTigers.BusinessLogic.Test;
 import codeTigers.BusinessLogic.User;
-import codeTigers.Database.LoginDB;
+import codeTigers.Database.TestDB;
 import codeTigers.Main;
 
 import java.awt.*;
@@ -40,7 +40,7 @@ public class TestChoiceUI {
      * @param u user
      */
     public TestChoiceUI(User u) {
-        LoginDB db = new LoginDB();
+        TestDB db = new TestDB();
 
         greetLabel.setText("Hello " + u.getFName());
         String[] colNames = {"Test Name", "Taken"};
