@@ -204,7 +204,6 @@ public class UserTakingTestForm {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         switch (option) {
             case 0:
                 image1.setImage(image);
@@ -226,15 +225,15 @@ public class UserTakingTestForm {
     private void displayCurrentAnswer() {
         int tmpScore = testQuestions.get(currentPair).getScore();
         switch (tmpScore) {
-            case 1:
+            case FIRST_ITEM_SCORE:
                 firstChoiceRadioButton.setSelected(true);
                 nextButton.setEnabled((true));
                 break;
-            case -1:
+            case SECOND_ITEM_SCORE:
                 secondChoiceRadioButton.setSelected(true);
                 nextButton.setEnabled((true));
                 break;
-            case 0:
+            case UNDECIDED_SCORE:
                 undecidedRadioButton.setSelected(true);
                 nextButton.setEnabled((true));
                 break;
