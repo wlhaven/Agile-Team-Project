@@ -44,6 +44,9 @@ public class UserTakingTestForm {
     private final ButtonGroup choiceGroup;
     private final ArrayList<TestQuestion> testQuestions;
     private final TestDriver testDriver;
+    private static final int UNDECIDED_SCORE = 0;
+    private static final int FIRST_ITEM_SCORE = 1;
+    private static final int SECOND_ITEM_SCORE = -1;
 
     /**
      * Constructor to set up the screen and components
@@ -105,7 +108,7 @@ public class UserTakingTestForm {
 
         firstChoiceRadioButton.addActionListener(e -> {
             if (firstChoiceRadioButton.isSelected()) {
-                testQuestions.get(currentPair).setScore(1);
+                testQuestions.get(currentPair).setScore(FIRST_ITEM_SCORE);
                 nextButton.setEnabled((true));
                 backButton.setEnabled((true));
             }
@@ -113,7 +116,7 @@ public class UserTakingTestForm {
 
         secondChoiceRadioButton.addActionListener(e -> {
             if (secondChoiceRadioButton.isSelected()) {
-                testQuestions.get(currentPair).setScore(-1);
+                testQuestions.get(currentPair).setScore(SECOND_ITEM_SCORE);
                 nextButton.setEnabled((true));
                 backButton.setEnabled((true));
             }
@@ -121,7 +124,7 @@ public class UserTakingTestForm {
 
         undecidedRadioButton.addActionListener(e -> {
             if (undecidedRadioButton.isSelected()) {
-                testQuestions.get(currentPair).setScore(0);
+                testQuestions.get(currentPair).setScore(UNDECIDED_SCORE);
                 nextButton.setEnabled((true));
                 backButton.setEnabled((true));
             }
@@ -132,7 +135,7 @@ public class UserTakingTestForm {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 firstChoiceRadioButton.setSelected(true);
-                testQuestions.get(currentPair).setScore(1);
+                testQuestions.get(currentPair).setScore(FIRST_ITEM_SCORE);
                 nextButton.setEnabled((true));
                 backButton.setEnabled((true));
             }
@@ -143,7 +146,7 @@ public class UserTakingTestForm {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 secondChoiceRadioButton.setSelected(true);
-                testQuestions.get(currentPair).setScore(-1);
+                testQuestions.get(currentPair).setScore(SECOND_ITEM_SCORE);
                 nextButton.setEnabled((true));
                 backButton.setEnabled((true));
             }
@@ -154,7 +157,7 @@ public class UserTakingTestForm {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 undecidedRadioButton.setSelected(true);
-                testQuestions.get(currentPair).setScore(0);
+                testQuestions.get(currentPair).setScore(UNDECIDED_SCORE);
                 nextButton.setEnabled((true));
                 backButton.setEnabled((true));
             }
