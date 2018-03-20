@@ -10,10 +10,9 @@ import java.awt.dnd.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class DroppablePicturePanel extends JPanel implements DropTargetListener {
-    private String DROP_TEXT = "Drop Image Here";
-    private DropTarget target;
     private boolean dragging = false;
     private BufferedImage image = null;
     private String imagePath = "";
@@ -21,7 +20,7 @@ public class DroppablePicturePanel extends JPanel implements DropTargetListener 
 
     public DroppablePicturePanel() {
         super();
-        target = new DropTarget(this, this);
+        DropTarget target = new DropTarget(this, this);
     }
 
     // this is how we make a runnable callback
@@ -50,6 +49,7 @@ public class DroppablePicturePanel extends JPanel implements DropTargetListener 
             g.drawImage(image, 0, 0, panelWidth, panelHeight, null);
         } else {
             // Draw drop text
+            String DROP_TEXT = "Drop Image Here";
             int textWidth = g.getFontMetrics().stringWidth(DROP_TEXT);
             int textHeight = g.getFontMetrics().getHeight();
             g.drawString(DROP_TEXT, (panelWidth - textWidth) / 2, (panelHeight + textHeight / 2)/2);
@@ -116,19 +116,17 @@ public class DroppablePicturePanel extends JPanel implements DropTargetListener 
         System.out.println("Drop");
         Transferable tr = dtde.getTransferable();
         DataFlavor[] flavors = tr.getTransferDataFlavors();
-        for (int i = 0; i < flavors.length; i++) {
-            if (flavors[i].isFlavorJavaFileListType()) {
+        for (DataFlavor flavor : flavors) {
+            if (flavor.isFlavorJavaFileListType()) {
                 dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
 
                 // And add the list of file names to our text area
-                java.util.List list = null;
+                List list;
                 try {
-                    list = (java.util.List)tr.getTransferData(flavors[i]);
+                    list = (List) tr.getTransferData(flavor);
                     if (list.size() > 0)
-                        loadFile((File)list.get(0));
-                } catch (UnsupportedFlavorException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                        loadFile((File) list.get(0));
+                } catch (UnsupportedFlavorException | IOException e) {
                     e.printStackTrace();
                 }
 
