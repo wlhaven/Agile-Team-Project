@@ -13,6 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+
 /**
  * CodeTiger class to pick a preferred color
  *
@@ -82,9 +84,21 @@ public class UserTakingTestForm {
             if (currentPair == numberQuestions - 1) {
                 sessionID = testDriver.createSession(userID, testID);
                 testDriver.insertTestResults(testQuestions, sessionID);
-                JOptionPane.showMessageDialog(rootPanel, "Test Completed. Returning to Log in screen");
-                currentPair = 0;
-                testDriver.endTest(0);
+                int n = JOptionPane.showConfirmDialog(
+                        rootPanel,
+                        "Would you like take another test?",
+                        "Test Completed!",
+                        JOptionPane.YES_NO_OPTION,
+                        QUESTION_MESSAGE);
+                if(n == 0) {
+                    currentPair = 0;
+                    testDriver.endTest(1);
+                }
+                else {
+                    JOptionPane.showMessageDialog(rootPanel, "Test Completed. Returning to Log in screen");
+                    currentPair = 0;
+                    testDriver.endTest(0);
+                }
             } else {
                 nextButton.setEnabled((false));
                 currentPair++;
