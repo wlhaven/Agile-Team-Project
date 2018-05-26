@@ -19,13 +19,11 @@ public class Test {
     private ArrayList<TestData> testItems = new ArrayList<>();
 
     public Test(Integer testID) {
-        this.testID = testID;
-        this.testName = null;
+        this(testID,null);
     }
 
     public Test(Integer testID, String testName) {
-        this.testID = testID;
-        this.testName = testName;
+        this(testID, testName, false, false);
     }
 
     public Test(Integer testID, String testName, boolean modified, boolean newtest) {
