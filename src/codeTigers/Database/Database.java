@@ -32,7 +32,8 @@ public class Database {
     private void getConnectionInfo() {
         try {
           //String filename = "mysqlConfig.properties";
-            String filename = "SQLServerConfig.properties";
+            String filename = "HomeSqlServer.properties";
+           // String filename = "SQLServerConfig.properties";
             prop.load(getClass().getClassLoader().getResourceAsStream(filename));
             url = prop.getProperty("database");
             userName = prop.getProperty("dbuser");
