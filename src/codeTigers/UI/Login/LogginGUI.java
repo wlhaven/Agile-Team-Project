@@ -10,8 +10,9 @@ import codeTigers.BusinessLogic.User;
 
 /**
  * A Login GUI with email & password fields
- * @author      Jon Grevstad
- * @version     10/11/2017
+ *
+ * @author Jon Grevstad
+ * @version 10/11/2017
  * Modified     11/15/2017
  * - Added Enter Key Listeners to both fields
  * - Added Ancestor Listeners to emailTextField
@@ -34,7 +35,7 @@ public class LogginGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String uEmail = String.valueOf(emailTextField.getText().toLowerCase());
                     String uPaswd = String.valueOf(textPasswordField.getPassword());
 
@@ -48,7 +49,7 @@ public class LogginGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String uEmail = String.valueOf(emailTextField.getText().toLowerCase());
                     String uPaswd = String.valueOf(textPasswordField.getPassword());
 
@@ -69,7 +70,7 @@ public class LogginGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String uEmail = String.valueOf(emailTextField.getText().toLowerCase());
                     String uPaswd = String.valueOf(textPasswordField.getPassword());
 
@@ -91,7 +92,7 @@ public class LogginGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String uEmail = String.valueOf(emailTextField.getText().toLowerCase());
                     String uPaswd = String.valueOf(textPasswordField.getPassword());
 
@@ -106,15 +107,20 @@ public class LogginGUI {
             public void ancestorAdded(AncestorEvent event) {
                 emailTextField.requestFocusInWindow();
             }
+
             @Override
-            public void ancestorRemoved(AncestorEvent event) {}
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+
             @Override
-            public void ancestorMoved(AncestorEvent event) {}
+            public void ancestorMoved(AncestorEvent event) {
+            }
         });
     }
 
     /**
      * This returns the root panel
+     *
      * @return returns the rootPanel
      */
     public JPanel getRootPanel() {
