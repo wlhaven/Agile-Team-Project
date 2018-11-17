@@ -90,11 +90,10 @@ public class UserTakingTestForm {
                         "Test Completed!",
                         JOptionPane.YES_NO_OPTION,
                         QUESTION_MESSAGE);
-                if(n == 0) {
+                if (n == 0) {
                     currentPair = 0;
                     testDriver.endTest(1);
-                }
-                else {
+                } else {
                     JOptionPane.showMessageDialog(rootPanel, "Test Completed. Returning to Log in screen");
                     currentPair = 0;
                     testDriver.endTest(0);
@@ -271,5 +270,4 @@ public class UserTakingTestForm {
     public JPanel getRootPanel() {
         return rootPanel;
     }
-
 }

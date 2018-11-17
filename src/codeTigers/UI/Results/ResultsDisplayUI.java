@@ -202,5 +202,4 @@ public class ResultsDisplayUI {
     private void createUIComponents() {
         rootPanel = new JPanel();
     }
-
 }

@@ -10,8 +10,9 @@ import codeTigers.BusinessLogic.User;
 
 /**
  * A Register GUI with email, name, password, & confirm password fields
- * @author      Jon Grevstad
- * @version     10/11/2017
+ *
+ * @author Jon Grevstad
+ * @version 10/11/2017
  * Modified     11/15/2017
  * - Added getters and setters
  * - Put validations in the User Class
@@ -34,7 +35,7 @@ public class RegisterGUI {
     /**
      * This sets the email & password to be passed
      *
-     * @param email set a String email
+     * @param email    set a String email
      * @param password set a String password
      */
     public RegisterGUI(String email, String password) {
@@ -46,7 +47,7 @@ public class RegisterGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String emal = emailTextField.getText().toLowerCase();
                     String fnam = firstNameTextField.getText();
                     String lnam = lastNameTextField.getText();
@@ -64,7 +65,7 @@ public class RegisterGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String emal = emailTextField.getText().toLowerCase();
                     String fnam = firstNameTextField.getText();
                     String lnam = lastNameTextField.getText();
@@ -82,7 +83,7 @@ public class RegisterGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String emal = emailTextField.getText().toLowerCase();
                     String fnam = firstNameTextField.getText();
                     String lnam = lastNameTextField.getText();
@@ -100,7 +101,7 @@ public class RegisterGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String emal = emailTextField.getText().toLowerCase();
                     String fnam = firstNameTextField.getText();
                     String lnam = lastNameTextField.getText();
@@ -118,7 +119,7 @@ public class RegisterGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String emal = emailTextField.getText().toLowerCase();
                     String fnam = firstNameTextField.getText();
                     String lnam = lastNameTextField.getText();
@@ -136,7 +137,7 @@ public class RegisterGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     String emal = emailTextField.getText().toLowerCase();
                     String fnam = firstNameTextField.getText();
                     String lnam = lastNameTextField.getText();
@@ -165,7 +166,7 @@ public class RegisterGUI {
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
 
-                if(e.getKeyChar() == KeyEvent.VK_ENTER) {
+                if (e.getKeyChar() == KeyEvent.VK_ENTER) {
                     //String uEmail = String.valueOf(emailTextField.getText().toLowerCase());
                     //String uPaswd = String.valueOf(textPasswordField.getPassword());
                     //Main.setUser(new User(-1, uEmail, "", uPaswd, ""));
@@ -186,10 +187,14 @@ public class RegisterGUI {
             public void ancestorAdded(AncestorEvent event) {
                 emailTextField.requestFocusInWindow();
             }
+
             @Override
-            public void ancestorRemoved(AncestorEvent event) {}
+            public void ancestorRemoved(AncestorEvent event) {
+            }
+
             @Override
-            public void ancestorMoved(AncestorEvent event) {}
+            public void ancestorMoved(AncestorEvent event) {
+            }
         });
     }
 

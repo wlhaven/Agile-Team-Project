@@ -1,6 +1,7 @@
 package codeTigers.UI.Admin;
 
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import javax.swing.*;
@@ -807,5 +808,4 @@ public class AdminSetupGUI {
             err.printStackTrace();
         }
     }
-
 }
