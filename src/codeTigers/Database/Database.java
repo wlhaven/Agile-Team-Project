@@ -33,7 +33,7 @@ public class Database {
         try {
           //String filename = "mysqlConfig.properties";
           //  String filename = "MobileSqlServer.properties";
-            String filename = "HomeSqlServer.properties";
+            String filename = "resources/HomeSqlServer.properties";
            // String filename = "SQLServerConfig.properties";
             prop.load(getClass().getClassLoader().getResourceAsStream(filename));
             url = prop.getProperty("database");

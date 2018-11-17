@@ -167,4 +167,5 @@ public class TestChoiceUI {
     public JPanel getRootPanel() {
         return rootPanel;
     }
+
 }
