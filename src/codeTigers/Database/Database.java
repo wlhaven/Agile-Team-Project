@@ -32,7 +32,8 @@ public class Database {
     private void getConnectionInfo() {
         try {
           //String filename = "mysqlConfig.properties";
-            String filename = "MobileSqlServer.properties";
+          //  String filename = "MobileSqlServer.properties";
+            String filename = "HomeSqlServer.properties";
            // String filename = "SQLServerConfig.properties";
             prop.load(getClass().getClassLoader().getResourceAsStream(filename));
             url = prop.getProperty("database");
@@ -73,10 +74,10 @@ public class Database {
         }
     }
 
-    @Override
-    protected void finalize() {
-        close();
-    }
+//    deprecated:  @Override
+//    protected void finalize() {
+//        close();
+//    }
 
 }
 
